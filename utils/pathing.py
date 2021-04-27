@@ -12,6 +12,9 @@ def get_project_dir():
 def get_data_dir():
     return path.join(get_project_dir(), 'data')
 
+def get_pickled_data_dir():
+    return path.join(get_data_dir(), 'pickled_data')
+
 
 def get_fold_dir():
     return path.join(get_data_dir(), 'FDDB-folds')

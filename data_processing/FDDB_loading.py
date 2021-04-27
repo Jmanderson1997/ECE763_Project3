@@ -33,7 +33,7 @@ def parse_ellipse_files(file, n_samples, grayscale=False):
                 # face.save(path.join(get_pickle_folder(), 'pic'+str(i)+'.png'), format='png')
                 face = face.resize((20,20))
                 # face.save(path.join(get_pickle_folder(), 'resized' + str(i)+'.png'), format='png')
-                faces.append(np.array(face))
+                faces.append(np.array(face, dtype=np.float))
 
                 r_left = randint(0, im.width-20)
                 r_top = randint(0, im.height-20)
@@ -43,7 +43,7 @@ def parse_ellipse_files(file, n_samples, grayscale=False):
                 # no_face.save(path.join(get_pickle_folder(), 'back'+str(i)+'.png'), format='png')
                 no_face = no_face.resize((20,20))
                 # no_face.save(path.join(get_pickle_folder(), 'b_resized' + str(i)+'.png'), format='png')
-                no_face = np.array(no_face)
+                no_face = np.array(no_face, dtype=np.float)
                 background.append(no_face)
 
 
@@ -66,14 +66,16 @@ def pickle_face_data(n_samples=30000, grayscale=False):
         background += neg
         file_index += 1
 
-    dataset_folder = get_dataset_dir()
+    if not os.path.exists(get_pickled_data_dir()): 
+        os.mkdir(get_pickled_data_dir())
+    dataset_folder = get_pickled_data_dir()
     np.save(os.path.join(dataset_folder, 'faces'), faces)
     np.save(os.path.join(dataset_folder, 'background'), background)
 
 
 def get_pickled_data(flatten=True):
-    faces = np.load(os.path.join(get_dataset_dir(), 'faces.npy'))
-    background = np.load(os.path.join(get_dataset_dir(), 'background.npy'))
+    faces = np.load(os.path.join(get_pickled_data_dir(), 'faces.npy'))
+    background = np.load(os.path.join(get_pickled_data_dir(), 'background.npy'))
     if flatten:
         faces = faces.reshape(-1, 20*20*3)
         background = background.reshape(-1, 20*20*3)
