@@ -27,8 +27,8 @@ class DataLoader:
     def preprocess(self):
         self.images -= self.images.mean(axis=0)
         self.images /= self.images.std(axis=0)
-        self.images = torch.tensor(self.images.reshape(-1,3,20,20))
+        self.images = torch.tensor(self.images.reshape(-1,3,20,20)).float()
 
-        self.labels = F.one_hot(torch.tensor(self.labels).to(torch.int64), num_classes=2)
+        self.labels = torch.tensor(self.labels).long()
 
 
