@@ -1,0 +1,8 @@
+The data for this project can be found at 'http://vis-www.cs.umass.edu/fddb'. 
+This repo expects the data to de extracted into a folder structure: project_directory/data/[2002, 2003, FDDB-folds]
+The script FDDB.py attempts to do this automatically but permissions on some of the images
+causes this to fail on my end. The script should generate the correct folder layout if there is any confusion
+about that. 
+
+All training of the Face model is located in the train jupyter notebook. Run each cell in 
+order to train the model (* First cell is because of weird dependency issue between matplotlib and torch)

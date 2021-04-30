@@ -5,8 +5,7 @@ import numpy as np
 
 class Trainer():
 
-    def __init__(self, name, model, train_loader, test_loader=None, loss=torch.nn.CrossEntropyLoss, optimizer=torch.optim.Adam):
-        self.name = name
+    def __init__(self, model, train_loader, test_loader=None, loss=torch.nn.CrossEntropyLoss, optimizer=torch.optim.Adam):
         self.model = model
         self.train_loader = train_loader
         self.test_loader = test_loader
@@ -17,8 +16,8 @@ class Trainer():
         self.test_accs = []
 
         self.loss = loss()
-        self.optimizer = optimizer(model.parameters(), lr=0.0001)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=.1)
+        self.optimizer = optimizer(model.parameters(), lr=1e-4)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5, gamma=.3)
 
         self.device = 'cuda' if torch.has_cuda else 'cpu'
 
@@ -95,12 +94,3 @@ class Trainer():
         plt.ylabel("Accuracy")
         plt.legend()
         plt.show()
-
-    def save_model(self):
-        pass
-
-    def save_history(self):
-        pass
-
-    def load_trainer(self, name):
-        pass

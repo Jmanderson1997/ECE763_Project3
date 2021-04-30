@@ -31,7 +31,7 @@ def parse_ellipse_files(file, n_samples, grayscale=False):
                 box = (int(max(center_x-width, 0)), int(max(center_y-height, 0)), int(min(center_x+width, im.width)), int(min(center_y+height, im.height)))
                 face = im.crop(box)
                 # face.save(path.join(get_pickle_folder(), 'pic'+str(i)+'.png'), format='png')
-                face = face.resize((20,20))
+                face = face.resize((100,100))
                 # face.save(path.join(get_pickle_folder(), 'resized' + str(i)+'.png'), format='png')
                 faces.append(np.array(face, dtype=np.float))
 
@@ -41,7 +41,7 @@ def parse_ellipse_files(file, n_samples, grayscale=False):
                 r_bottom = randint(r_top+20, im.height)
                 no_face = im.crop((r_left, r_top, r_right, r_bottom))
                 # no_face.save(path.join(get_pickle_folder(), 'back'+str(i)+'.png'), format='png')
-                no_face = no_face.resize((20,20))
+                no_face = no_face.resize((100,100))
                 # no_face.save(path.join(get_pickle_folder(), 'b_resized' + str(i)+'.png'), format='png')
                 no_face = np.array(no_face, dtype=np.float)
                 background.append(no_face)
@@ -77,8 +77,8 @@ def get_pickled_data(flatten=True):
     faces = np.load(os.path.join(get_pickled_data_dir(), 'faces.npy'))
     background = np.load(os.path.join(get_pickled_data_dir(), 'background.npy'))
     if flatten:
-        faces = faces.reshape(-1, 20*20*3)
-        background = background.reshape(-1, 20*20*3)
+        faces = faces.reshape(-1, 100*100*3)
+        background = background.reshape(-1, 100*100*3)
     return faces[:int(len(faces)*.9)], background[:int(len(background)*.9)], faces[int(len(faces)*.9):], background[int(len(background)*.9):]
 
 
